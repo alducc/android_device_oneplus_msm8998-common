@@ -27,6 +27,19 @@ $(call inherit-product, vendor/oneplus/msm8998-common/msm8998-common-vendor.mk)
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
+# Prebuilts
+PRODUCT_PACKAGES += \
+    OnePlusCamera \
+    OnePlusGallery \
+    OnePlusCameraService
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilts/addon.d/51-oneplus-camera.sh:system/addon.d/51-oneplus-camera.sh  \
+    $(LOCAL_PATH)/prebuilts/lib/libopcameralib-em.so:system/lib/libopcameralib-em.so  \
+    $(LOCAL_PATH)/prebuilts/lib/libstagefright.so:system/lib/libstagefright.so  \
+    $(LOCAL_PATH)/prebuilts/lib64/libstagefright.so:system/lib64/libstagefright.so  \
+    $(LOCAL_PATH)/prebuilts/etc/permissions/privapp-permissions-oem.xml:system/etc/permissions/privapp-permissions-oem.xml
+
 # Dalvik
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.heapstartsize=16m \
@@ -331,10 +344,6 @@ PRODUCT_PACKAGES += \
     android.hardware.secure_element@1.0-service \
     SecureElement
 
-# OEM Unlock reporting
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    ro.oem_unlock_supported=1
-
 # OMX
 PRODUCT_PACKAGES += \
     libc2dcolorconvert \
@@ -440,10 +449,6 @@ PRODUCT_PACKAGES += \
 # Vendor security patch level
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.lineage.build.vendor_security_patch=2018-12-01
-
-# Verity
-PRODUCT_SYSTEM_VERITY_PARTITION := /dev/block/bootdevice/by-name/system
-$(call inherit-product, build/target/product/verity.mk)
 
 # Vibrator
 PRODUCT_PACKAGES += \
